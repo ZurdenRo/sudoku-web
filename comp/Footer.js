@@ -1,10 +1,11 @@
-const Footer = () => {
 
+
+const Footer = () => {
     return (
-        <div>
+        <footer>
             <h1>Footer</h1>
             <a> This is a Footer.</a>
-        </div>
+        </footer>
     );
 }
 
