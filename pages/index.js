@@ -3,8 +3,18 @@ import styles from '../styles/Home.module.css'
 import styButton from '../styles/Button.module.css'
 import Image from 'next/image'
 import Head from 'next/head'
+import React, {useState} from 'react'
+
+
 
 export default function Home(){
+    const [obj, setGrid] = useState({grid: ''});
+
+    const functionClick = () => {
+        setGrid(obj => ({grid : obj.value}))
+        console.log(obj.grid)
+    }
+
     return(
         <>
             <Head>
@@ -12,22 +22,22 @@ export default function Home(){
                 <meta name='keyboards' content='mypage'/>
             </Head>
             <main className={styles.main}>
-                <h1>Hello</h1>
-                <Image src='/mountain.jpg' width={200} height={100}></Image>
-                <div>
-                    <div>
-                        <h1>Hola H1</h1>
-                        <button className={styButton.firstButton} type='button'> is button</button>
-                    </div>
-                    <div>
-                        <h2>Hola H2</h2>
-                        <button className={styButton.firstButton} type='button'> is button</button>
-                    </div>
-                    <div>
-                        <h3>Hola H3</h3>
-                        <button className={styButton.firstButton} type='button'> is button</button>
-                    </div>
-                </div>
+               <div className='container'>  
+                    <div className='select-grid'>
+                        <form>
+                            <input type='radio' name='grid' value='2' onClick={functionClick}></input>
+                            <label>Grid 2x2</label>
+                            <br/>
+                            <input type='radio' name='grid' value='3' onChange={functionClick}></input>
+                            <label>Grid 3x3</label>
+                            <br/>
+                        </form>
+                        <button>
+                            <p>Start</p>
+                        </button>
+                    </div> 
+               </div>
+            
             </main>
         </>
     );

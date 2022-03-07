@@ -3,8 +3,7 @@
 const Footer = () => {
     return (
         <footer>
-            <h1>Footer</h1>
-            <a> This is a Footer.</a>
+            <h1>Do u play Sudoku?</h1>
         </footer>
     );
 }
