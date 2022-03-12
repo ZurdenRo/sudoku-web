@@ -1,7 +1,25 @@
-body{
-    background-color: aqua;
+body {
+   margin: 0;
+   padding: 0;
+ }
+
+.formGrid{
+   border: 5px solid #FFFF00;
+   background-color: rgb(255, 255, 255);
+   justify-self: center;
+   text-align: center;
+   width: 200px;
+   margin: 20%;
 }
 
+html{
+   margin: 0;
+   padding: 0;
+}
+
+
 main{
-   border: 5px solid black;
+   display: grid;
+   margin: 0;
+   padding: 0;
 }
