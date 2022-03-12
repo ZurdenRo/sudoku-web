@@ -1,7 +1,4 @@
-import Link from 'next/link'
-import styles from '../styles/Home.module.css'
-import styButton from '../styles/Button.module.css'
-import Image from 'next/image'
+import Form from '../comp/form/Form.js'
 import Head from 'next/head'
 import React, {useState} from 'react'
 
@@ -18,15 +15,13 @@ export default function Home(){
     return(
         <>
             <Head>
-                <title> My page</title>
+                <title>My page</title>
                 <meta name='keyboards' content='mypage'/>
             </Head>
-            <main className={styles.main}>
-               
-               <div>
-                    <input type='checkbox' name='checked' value={checked} onChange={functionCheck}></input>
-               </div>
+            <main className='mainApp'>
             
+                <Form/>
+
             </main>
         </>
     );
