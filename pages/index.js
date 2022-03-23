@@ -1,15 +1,27 @@
 import Form from '../comp/form/Form.js'
 import Head from 'next/head'
 import React, {useState} from 'react'
+import Grid from '../comp/grid/Grid.js'
 
 
 
 export default function Home(){
-   
-    const [checked, isChecked] = useState(false)
 
-    const functionCheck = (e) => {
-        console.log(e.checked)
+    const [hiddenForm, setHiddenForm] = useState(true)
+    const [grid, setGrid] = useState({grid: ''})
+    
+
+    function setNewGrid(){
+        setHiddenForm(false)
+    }
+
+    function showForm(){
+        setHiddenForm(true)
+    }
+
+    function getDataWithForm(value){
+        setGrid({grid: value.gridForm})
+        
     }
 
     return(
@@ -19,9 +31,7 @@ export default function Home(){
                 <meta name='keyboards' content='mypage'/>
             </Head>
             <main className='mainApp'>
-            
-                <Form/>
-
+                { hiddenForm ?  <Form newGrid={[setNewGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={grid} />}
             </main>
         </>
     );

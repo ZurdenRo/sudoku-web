@@ -1,25 +1,25 @@
-body {
-   margin: 0;
-   padding: 0;
- }
-
 .formGrid{
    border: 5px solid #FFFF00;
    background-color: rgb(255, 255, 255);
    justify-self: center;
+   justify-content: center;
    text-align: center;
    width: 200px;
    margin: 20%;
 }
 
-html{
+main{
+   display: grid;
    margin: 0;
    padding: 0;
 }
 
+body {
+   margin: 0;
+   padding: 0;
+ }
 
-main{
-   display: grid;
+html{
    margin: 0;
    padding: 0;
 }
