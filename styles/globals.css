@@ -4,7 +4,6 @@
    justify-self: center;
    justify-content: center;
    text-align: center;
-   width: 200px;
    margin: 20%;
 }
 
@@ -22,4 +21,19 @@ body {
 html{
    margin: 0;
    padding: 0;
+}
+
+tr{
+   background-color: #FFFF00;
+}
+
+td{
+   width: 20px;
+}
+
+.container-table{
+   margin: 20%;
+   justify-self: center;
+   justify-content: center;
+   text-align: center;
 }

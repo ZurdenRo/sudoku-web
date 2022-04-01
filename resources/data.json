@@ -1,0 +1,158 @@
+{
+    "grid": {
+        "subGrid": [
+            [
+                {
+                    "indicator": "IDGrid: 1",
+                    "cellsMatrix": [
+                        [
+                            {
+                                "number": 4,
+                                "row": 0,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 1,
+                                "row": 0,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ],
+                        [
+                            {
+                                "number": 2,
+                                "row": 1,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 3,
+                                "row": 1,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "indicator": "IDGrid: 2",
+                    "cellsMatrix": [
+                        [
+                            {
+                                "number": 2,
+                                "row": 0,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 3,
+                                "row": 0,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ],
+                        [
+                            {
+                                "number": 1,
+                                "row": 1,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 4,
+                                "row": 1,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ]
+                    ]
+                }
+            ],
+            [
+                {
+                    "indicator": "IDGrid: 3",
+                    "cellsMatrix": [
+                        [
+                            {
+                                "number": 1,
+                                "row": 0,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 4,
+                                "row": 0,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ],
+                        [
+                            {
+                                "number": 3,
+                                "row": 1,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 2,
+                                "row": 1,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "indicator": "IDGrid: 4",
+                    "cellsMatrix": [
+                        [
+                            {
+                                "number": 3,
+                                "row": 0,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 2,
+                                "row": 0,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ],
+                        [
+                            {
+                                "number": 4,
+                                "row": 1,
+                                "column": 0,
+                                "numberAbsent": false,
+                                "repeat": false
+                            },
+                            {
+                                "number": 1,
+                                "row": 1,
+                                "column": 1,
+                                "numberAbsent": false,
+                                "repeat": false
+                            }
+                        ]
+                    ]
+                }
+            ]
+        ]
+    }
+}
