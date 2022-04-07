@@ -174,7 +174,7 @@ export default function Grid({showForm, grid}){
     async function getData(query){
         console.log('Run Method in Effect')
         //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
-        //const data = await response.json()
+        //fconst data = await response.json()
         setData(json)
         setFetching(false)
     }
