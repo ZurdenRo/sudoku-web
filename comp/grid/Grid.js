@@ -7,7 +7,7 @@ function GenerateGrid({data, showForm}){
 
     const [table, setTable] = useState()
     const [tableToMatch, setTableToMatch] = useState()
-    const [isEqual, setEqual] = useState(true)
+    const [isEqual, setEqual] = useState(false)
     
     function getRandomArbitrary(num){
         let randomTmp = [];
@@ -78,7 +78,12 @@ function GenerateGrid({data, showForm}){
             for (let row = 0; row < num; row++) {
                 inside.map( (valueGrid) => {
                     for (let column = 0; column < num; column++) {
-                        matrixFinal[positionRow][positionCol] = valueGrid.cellsMatrix[row][column]
+                        let cellTmp = valueGrid.cellsMatrix[row][column]
+                        matrixFinal[positionRow][positionCol] = cellTmp
+                        if(!valueGrid.cellsMatrix[row][column].hidden){
+                            matrixToMatch[positionRow][positionCol] = cellTmp
+                        } 
+                        
                         positionCol++;
                     }
                 });
@@ -86,6 +91,8 @@ function GenerateGrid({data, showForm}){
                 positionCol = 0
             }
         });
+        console.log(matrixFinal)
+        console.log(matrixToMatch)
         setTable(matrixFinal)
         setTableToMatch(matrixToMatch)
     },[data])
@@ -94,20 +101,29 @@ function GenerateGrid({data, showForm}){
         showForm()
     }
 
-    function updateMatrix(target, x, y){     
-        tableToMatch[x][y] = {number: target, position : {row: x, column: y}}
+    function updateMatrix(target, x, y){  
+        if(target){
+            tableToMatch[x][y] = new ObjCell(parseInt(target), x, y, false)
+        }else{
+            tableToMatch[x][y] = ''
+        }
+        
         console.log(tableToMatch) 
     }
 
     function checkMatrix(){
-        
+        let tmpIsEqual = true
         for (let row = 0; row < table.length; row++) {
             for (let column = 0; column < table.length; column++) {
-                if(table[row][column] != tableToMatch[row][column]){
-                    
-                }
+                if(tableToMatch[row][column]){
+                    if(!table[row][column].number === tableToMatch[row][column].number){
+                        console.log('here')
+                        tmpIsEqual = false
+                    }
+                }else{tmpIsEqual=false}
             }
         }
+        setEqual(tmpIsEqual)
         
     }
 
