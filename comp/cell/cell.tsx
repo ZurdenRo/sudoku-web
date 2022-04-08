@@ -1,6 +1,6 @@
 
 
-export default function Cell({updateMatrix, position, cell}) {
+export default function Cell({updateMatrix, position, cell} : {updateMatrix: any, position : any, cell: any} ) {
 
     var matrixCell
 
