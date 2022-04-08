@@ -1,10 +1,10 @@
-import React, {useState, createRef, useEffect}  from 'react';
+import React, {useState, createRef}  from 'react';
 
 
-export default function Form({newGrid}){
+export default function Form({newGrid} : {newGrid : any}){
 
-  const refGridTwo = createRef()
-  const refGridThree = createRef()
+  const refGridTwo = createRef<HTMLInputElement>()
+  const refGridThree = createRef<HTMLInputElement>()
   const [gridForm, setGridForm] = useState({idGrid: ''})
   const [showGrid, getDataWithForm] = newGrid
 
@@ -15,11 +15,21 @@ export default function Form({newGrid}){
   }
 
   function fGridTwo(){
-    setGridForm({...gridForm, idGrid: refGridTwo.current.value})
+    const inputRadioTwo = refGridTwo.current
+    if(inputRadioTwo){
+      console.log(inputRadioTwo.value)
+      setGridForm({...gridForm, idGrid: inputRadioTwo.value})
+    }
+    
   }
 
   function fgridThree(){
-    setGridForm({...gridForm, idGrid :refGridThree.current.value})
+    const inputRadioThree = refGridThree.current
+    if(inputRadioThree){
+      console.log(inputRadioThree.value)
+      setGridForm({...gridForm, idGrid : inputRadioThree.value})
+    }
+    
   }
 
   return (

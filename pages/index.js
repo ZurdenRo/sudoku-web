@@ -1,5 +1,5 @@
-import Form from '../comp/form/Form.js'
-import Grid from '../comp/grid/Grid.js'
+import Form from '../comp/form/Form.tsx'
+import Grid from '../comp/grid/Grid.tsx'
 import Head from 'next/head'
 import React, {useState} from 'react'
 

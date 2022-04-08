@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import Cell from '../cell/cell.js'
 import json from '../../resources/data.json'
-import {ObjCell} from '../../model/Cell.js'
+//import {ObjCell} from '../../model/Cell.js'
 
-function GenerateGrid({data, showForm}){
+function GenerateGrid({data , showForm} : {data: any, showForm: any}){
 
     const [table, setTable] = useState()
     const [tableToMatch, setTableToMatch] = useState()
