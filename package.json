@@ -7,7 +7,11 @@
     "dev": "next",
     "build": "next build",
     "test": "echo \"Error: no test specified\" && exit 1",
+<<<<<<< HEAD
     "tsc": "tsc"
+=======
+    "tsc" : "tsc"
+>>>>>>> cd0c7e25ae819ce43dc6491d5e171c68f2ac0803
   },
   "repository": {
     "type": "git",
@@ -26,8 +30,13 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/node": "^17.0.24",
     "@types/react": "^17.0.44",
+=======
+    "@types/node": "^17.0.23",
+    "@types/react": "^17.0.43",
+>>>>>>> cd0c7e25ae819ce43dc6491d5e171c68f2ac0803
     "typescript": "^4.6.3"
   }
 }
