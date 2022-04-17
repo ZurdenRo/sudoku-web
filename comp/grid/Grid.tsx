@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Cell from '../cell/cell.js'
+// import Cell from '../cell/cell.js'
 import json from '../../resources/data.json'
 //import {ObjCell} from '../../model/Cell.js'
 
@@ -9,7 +9,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
     const [tableToMatch, setTableToMatch] = useState()
     const [isEqual, setEqual] = useState(false)
     
-    function getRandomArbitrary(num){
+    /* function getRandomArbitrary(num){
         let randomTmp = [];
         while (randomTmp.length < num) {
             let obj = {
@@ -30,12 +30,12 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
         };
 
         return objTwo;
-    }
+    } */
     
     useEffect( () => {
         console.log('effect in generateGrid')
         let num = data.grid.subGrid.length
-        var matF = []
+        //var matF = []
         var matrixFinal = new Array(num*num) 
         var matrixToMatch = new Array(num*num)
         for (let element = 0; element < matrixFinal.length; element++) {
@@ -43,7 +43,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
             matrixToMatch[element] =  new Array(num*num)
         }
         
-        data.grid.subGrid.forEach((element, i) => {
+        /* data.grid.subGrid.forEach((element, i) => {
             var matrixTmp = []
             element.map((value)=>{
                 let arrRandomPosition = getRandomArbitrary(num)
@@ -55,9 +55,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
                         let posY = value.cellsMatrix[row][column].column
                         let number = value.cellsMatrix[row][column].number
                         let posToHidden = arrRandomPosition.positionToHidden.find( posHid => {
-                            return(
-                                posHid.posX === posX && posHid.posY === posY
-                            );
+                            return posHid.posX === posX && posHid.posY === posY;
                         });
 
                         if(posToHidden){
@@ -71,10 +69,10 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
                 matrixTmp.push({gridRow : i, cellsMatrix: matrix})
             });
             matF.push(matrixTmp)
-        });
+        }); */
         let positionRow = 0
         let positionCol = 0
-        matF.map(inside => {
+       /*  matF.map(inside => {
             for (let row = 0; row < num; row++) {
                 inside.map( (valueGrid) => {
                     for (let column = 0; column < num; column++) {
@@ -90,18 +88,18 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
                 positionRow++;
                 positionCol = 0
             }
-        });
-        console.log(matrixFinal)
+        }); */
+        /* console.log(matrixFinal)
         console.log(matrixToMatch)
         setTable(matrixFinal)
-        setTableToMatch(matrixToMatch)
+        setTableToMatch(matrixToMatch) */
     },[data])
 
     function goBackToForm(){
         showForm()
     }
 
-    function updateMatrix(target, x, y){  
+    /* function updateMatrix(target, x, y){  
         if(target){
             tableToMatch[x][y] = new ObjCell(parseInt(target), x, y, false)
         }else{
@@ -109,9 +107,9 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
         }
         
         console.log(tableToMatch) 
-    }
+    } */
 
-    function checkMatrix(){
+    /* function checkMatrix(){
         let tmpIsEqual = true
         for (let row = 0; row < table.length; row++) {
             for (let column = 0; column < table.length; column++) {
@@ -125,7 +123,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
         }
         setEqual(tmpIsEqual)
         
-    }
+    } */
 
     if(table){
         return (
