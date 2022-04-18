@@ -3,6 +3,11 @@ import Grid from '../comp/grid/Grid'
 import Head from 'next/head'
 import React, {useState} from 'react'
 
+
+interface PropHome{
+
+}
+
 export default function Home(){
 
     const [hiddenForm, setHiddenForm] = useState(true)

@@ -1,6 +1,10 @@
 import React, {useState, createRef}  from 'react';
 
 
+interface PropFrom{
+
+}
+
 export default function Form({newGrid} : {newGrid : any}){
 
   const refGridTwo = createRef<HTMLInputElement>()
