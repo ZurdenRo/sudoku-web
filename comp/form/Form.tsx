@@ -2,7 +2,8 @@ import React, {useState, createRef}  from 'react';
 
 
 interface PropFrom{
-
+  showGrid() : void
+  getDataWithForm(form : string) : void
 }
 
 export default function Form({newGrid} : {newGrid : any}){

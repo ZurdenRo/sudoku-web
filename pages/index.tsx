@@ -5,7 +5,7 @@ import React, {useState} from 'react'
 
 
 interface PropHome{
-
+    IDGrid : string
 }
 
 export default function Home(){
