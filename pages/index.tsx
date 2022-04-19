@@ -10,21 +10,22 @@ interface PropHome{
 
 export default function Home(){
 
-    const [hiddenForm, setHiddenForm] = useState(true)
-    const [gridHome, setGrid] = useState(null)
+    const [hiddenForm, setHiddenForm] = useState<boolean>(true)
+    const [gridHome, setGrid] = useState<PropHome | undefined>(undefined)
     
 
-    function showGrid(){
+    const showGrid = () => {
         setHiddenForm(false)
     }
 
-    function showForm(){
+    const showForm = () => {
         setHiddenForm(true)
     }
 
-    function getDataWithForm(dataForm){
-        setGrid({dataForm})
+    const getDataWithForm = (dataForm: PropHome) => {
+        setGrid({...dataForm, IDGrid: dataForm.IDGrid})
     }
+
 
     return(
         <>  
@@ -33,7 +34,7 @@ export default function Home(){
                 <meta name='keyboards' content='mypage'/>
             </Head>
             <main className='mainApp'>
-                { hiddenForm ?  <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome.dataForm} />}
+                { hiddenForm ?  <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome?.IDGrid} />}
             </main>
         </>
     );

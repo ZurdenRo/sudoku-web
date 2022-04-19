@@ -6,7 +6,7 @@ interface PropFrom{
   getDataWithForm(form : string) : void
 }
 
-export default function Form({newGrid} : {newGrid : any}){
+export default function Form ({newGrid} : {newGrid : any}){
 
   const refGridTwo = createRef<HTMLInputElement>()
   const refGridThree = createRef<HTMLInputElement>()
