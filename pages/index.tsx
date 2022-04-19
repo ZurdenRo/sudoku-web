@@ -22,10 +22,9 @@ export default function Home(){
         setHiddenForm(true)
     }
 
-    const getDataWithForm = (dataForm: PropHome) => {
-        setGrid({...dataForm, IDGrid: dataForm.IDGrid})
+    const getDataWithForm = (dataForm: PropHome)=> {
+        setGrid({IDGrid: dataForm.IDGrid})
     }
-
 
     return(
         <>  
@@ -34,7 +33,7 @@ export default function Home(){
                 <meta name='keyboards' content='mypage'/>
             </Head>
             <main className='mainApp'>
-                { hiddenForm ?  <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome?.IDGrid} />}
+                { hiddenForm ?  <Form newGrid={[showForm, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome?.IDGrid} />}
             </main>
         </>
     );

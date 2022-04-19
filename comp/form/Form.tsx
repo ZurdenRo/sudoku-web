@@ -2,28 +2,31 @@ import React, {useState, createRef}  from 'react';
 
 
 interface PropFrom{
-  showGrid() : void
-  getDataWithForm(form : string) : void
+  newGrid: [() => void, (dataForm: PropHome) => void]
 }
 
-export default function Form ({newGrid} : {newGrid : any}){
+interface PropHome{
+  IDGrid : string
+}
+
+export default function Form (newGrid : PropFrom){
 
   const refGridTwo = createRef<HTMLInputElement>()
   const refGridThree = createRef<HTMLInputElement>()
-  const [gridForm, setGridForm] = useState({idGrid: ''})
-  const [showGrid, getDataWithForm] = newGrid
+  /* const [gridForm, setGridForm] = useState<PropGrid>()
+  const [showGrid, getDataWithForm] = newGrid */
 
 
-  function initGame(){
+  /* function initGame(){
     showGrid()
     getDataWithForm(gridForm)
-  }
+  } */
 
   function fGridTwo(){
     const inputRadioTwo = refGridTwo.current
     if(inputRadioTwo){
       console.log(inputRadioTwo.value)
-      setGridForm({...gridForm, idGrid: inputRadioTwo.value})
+      //setGridForm({...gridForm, idGrid: inputRadioTwo.value})
     }
     
   }
@@ -32,7 +35,7 @@ export default function Form ({newGrid} : {newGrid : any}){
     const inputRadioThree = refGridThree.current
     if(inputRadioThree){
       console.log(inputRadioThree.value)
-      setGridForm({...gridForm, idGrid : inputRadioThree.value})
+      //setGridForm({...gridForm, idGrid : inputRadioThree.value})
     }
     
   }
@@ -43,8 +46,8 @@ export default function Form ({newGrid} : {newGrid : any}){
         <label>Grid 2x2</label>
         <input ref={refGridThree} onChange={fgridThree} type='radio' name='grid' value='three'></input>
         <label>Grid 3x3</label>
-        <button onClick={initGame}>Start</button>
+      
     </div>
   );
-
+  //<button onClick={}>Start</button>
 }
