@@ -2,42 +2,45 @@ import React, {useState, createRef}  from 'react';
 
 
 interface PropFrom{
-  newGrid: [() => void, (dataForm: PropHome) => void]
+  newGrid: [() => void, (dataForm: string) => void ]
 }
 
-interface PropHome{
+interface PropGrid{
   IDGrid : string
 }
 
-export default function Form (newGrid : PropFrom){
+export default function Form (functionParent : PropFrom){
 
   const refGridTwo = createRef<HTMLInputElement>()
   const refGridThree = createRef<HTMLInputElement>()
-  /* const [gridForm, setGridForm] = useState<PropGrid>()
-  const [showGrid, getDataWithForm] = newGrid */
+  const arrFunc : [ () => void, (dataForm: string) => void] = functionParent.newGrid
+  const [gridForm, setGridForm] = useState<PropGrid | undefined>()
 
 
-  /* function initGame(){
-    showGrid()
-    getDataWithForm(gridForm)
-  } */
+  const initGame = () => {
+    const [showGrid, getDataWithForm] = arrFunc
+    if (gridForm != undefined){
+      showGrid()
+      getDataWithForm(gridForm.IDGrid)
+    }
+  }
 
-  function fGridTwo(){
+  const fGridTwo = () => {
     const inputRadioTwo = refGridTwo.current
     if(inputRadioTwo){
       console.log(inputRadioTwo.value)
-      //setGridForm({...gridForm, idGrid: inputRadioTwo.value})
+      setGridForm({IDGrid: inputRadioTwo.value})
     }
     
   }
 
-  function fgridThree(){
+  const fgridThree = () => {
     const inputRadioThree = refGridThree.current
     if(inputRadioThree){
       console.log(inputRadioThree.value)
-      //setGridForm({...gridForm, idGrid : inputRadioThree.value})
+      setGridForm({IDGrid : inputRadioThree.value})
     }
-    
+  
   }
 
   return (
@@ -46,8 +49,8 @@ export default function Form (newGrid : PropFrom){
         <label>Grid 2x2</label>
         <input ref={refGridThree} onChange={fgridThree} type='radio' name='grid' value='three'></input>
         <label>Grid 3x3</label>
-      
+        <button onClick={initGame}>Start</button>
     </div>
   );
-  //<button onClick={}>Start</button>
+ 
 }

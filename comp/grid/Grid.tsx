@@ -160,29 +160,38 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
 
 
 
-export default function Grid({showForm, grid}){
+interface PropGrid{
+    showForm: () => void
+    grid: string | undefined
+}
 
-    const [data, setData] = useState()
-    const [isFetching, setFetching] = useState(true)
+interface PropGame{
+    table: string
+}
+
+export default function Grid({showForm, grid} : PropGrid){
+
+    const [data, setData] = useState<PropGame>()
+    const [isFetching, setFetching] = useState<Boolean>(true)
 
     useEffect( () => {
-        getData(grid.idGrid)
+        getData(grid)
     },[grid])
 
-    async function getData(query){
+    async function getData(query: string | undefined){
         console.log('Run Method in Effect')
-        //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
-        //fconst data = await response.json()
-        setData(json)
+        const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
+        const data = await response.json()
+        setData({table : data})
         setFetching(false)
     }
     
 
-    if(isFetching) return <h1>loading</h1>
+    if(isFetching) return (<h1>loading</h1>);
 
     return(
         <>
-            <GenerateGrid data={data} showForm={showForm}/>
+           {/*  <GenerateGrid data={data} showForm={showForm}/> */}
         </>
-    )
+    );
 }
