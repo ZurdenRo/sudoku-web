@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react'
-// import Cell from '../cell/cell.js'
 import json from '../../resources/data.json'
-//import {ObjCell} from '../../model/Cell.js'
 
-function GenerateGrid({data , showForm} : {data: any, showForm: any}){
+
+function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
 
     const [table, setTable] = useState()
     const [tableToMatch, setTableToMatch] = useState()
@@ -33,7 +32,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
     } */
     
     useEffect( () => {
-        console.log('effect in generateGrid')
+       /*  console.log('effect in generateGrid')
         let num = data.grid.subGrid.length
         //var matF = []
         var matrixFinal = new Array(num*num) 
@@ -41,7 +40,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
         for (let element = 0; element < matrixFinal.length; element++) {
             matrixFinal[element] = new Array(num*num)
             matrixToMatch[element] =  new Array(num*num)
-        }
+        } */
         
         /* data.grid.subGrid.forEach((element, i) => {
             var matrixTmp = []
@@ -124,9 +123,15 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
         setEqual(tmpIsEqual)
         
     } */
-
+    console.log(data)
     if(table){
+        
         return (
+            <div>
+                
+            </div>
+        )
+       /*  return (
             <div className='container-table'>
                 <table>
                     <thead></thead>
@@ -151,7 +156,7 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
                 <button onClick={checkMatrix}>Check</button>
                 {isEqual ? <h1>yes u know bro</h1> : <h1>no</h1>}
             </div>
-        )
+        ) */
     }else{
         return <h1>loading</h1>
     }
@@ -162,36 +167,36 @@ function GenerateGrid({data , showForm} : {data: any, showForm: any}){
 
 interface PropGrid{
     showForm: () => void
-    grid: string | undefined
+    grid: string
 }
 
 interface PropGame{
-    table: string
+    table: any
 }
+
 
 export default function Grid({showForm, grid} : PropGrid){
 
     const [data, setData] = useState<PropGame>()
     const [isFetching, setFetching] = useState<Boolean>(true)
 
-    useEffect( () => {
+    useEffect(() => {
+        console.log('Run Method in Effect')
         getData(grid)
     },[grid])
 
-    async function getData(query: string | undefined){
-        console.log('Run Method in Effect')
-        const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
-        const data = await response.json()
-        setData({table : data})
+    async function getData(query: string){
+        //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
+        //const data = await response.json()
+        setData({table : json})
         setFetching(false)
     }
-    
 
-    if(isFetching) return (<h1>loading</h1>);
+    if(isFetching) return <h1>loading</h1>;
 
     return(
         <>
-           {/*  <GenerateGrid data={data} showForm={showForm}/> */}
+           {<GenerateGrid data={data?.table} showForm={showForm}/>}
         </>
     );
 }
