@@ -1,17 +1,17 @@
-import Form from '../comp/form/Form'
-import Grid from '../comp/grid/Grid'
+import Form from '../components/form/Form'
+import Grid from '../components/grid/Grid'
 import Head from 'next/head'
 import React, {useState} from 'react'
 
 
 interface PropHome{
-    IDGrid : string
+    idGrid : string 
 }
 
 export default function Home(){
 
     const [hiddenForm, setHiddenForm] = useState<boolean>(true)
-    const [gridHome, setGrid] = useState<PropHome>()
+    const [gridHome, setGrid] = useState<PropHome>({idGrid: ""})
     
 
     const showGrid = () => {
@@ -23,7 +23,7 @@ export default function Home(){
     }
 
     const getDataWithForm = (dataForm: string)=> {
-        setGrid({IDGrid: dataForm})
+        setGrid({idGrid: dataForm})
     }
 
     return(
@@ -33,7 +33,7 @@ export default function Home(){
                 <meta name='keyboards' content='mypage'/>
             </Head>
             <main className='mainApp'>
-                {hiddenForm ? <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome?.IDGrid} />}
+                {hiddenForm ? <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome.idGrid} />}
             </main>
         </>
     );
