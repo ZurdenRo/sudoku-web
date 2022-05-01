@@ -14,21 +14,18 @@ interface Position {
 
 interface PositionGrid{
     cellsMatrix: Cell[][]
-    idGrid: number
+    indicator: number
 }
 
 interface Table{
-
+    cells: Cell[][] | undefined[][]
 }
 
-interface TableFrontUser{
 
-}
-
-function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
+function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => void}){
 
     const [table, setTable] = useState<Table>()
-    const [tableToMatch, setTableToMatch] = useState<TableFrontUser>()
+    const [tableToMatch, setTableToMatch] = useState<Table>()
     const [isEqual, setEqual] = useState<Boolean>(false)
     
     const getRandomArbitrary = (num: number): Position[] => {
@@ -75,7 +72,7 @@ function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
                         matrixFinal[row][column] = cellTmp
                     }
                 }
-                let posGrid : PositionGrid = {cellsMatrix: matrixFinal, idGrid: i}
+                let posGrid : PositionGrid = {cellsMatrix: matrixFinal, indicator: i}
                 arrPosGrid.push(posGrid)
             });
             finalArr.push(arrPosGrid)
@@ -84,7 +81,7 @@ function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
         var positionRow = 0
         var positionCol = 0
         var matrixFinal : Cell [][] = []
-        var matrixToMatch : Cell [][] | string[][] = []
+        var matrixToMatch : Cell [][] | undefined[][] = []
         finalArr.map( arrElem => {
             for (let row = 0; row < numLength; row++) {
                 matrixFinal[positionRow] = []
@@ -94,7 +91,7 @@ function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
                     let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
                     matrixFinal[positionRow][positionCol] = cellTmp
                     if(valuePosGrid.cellsMatrix[row][column].hidden){
-                        matrixToMatch[positionRow][positionCol] =  "empty"
+                        matrixToMatch[positionRow][positionCol] =  undefined
                     }else{
                         matrixToMatch[positionRow][positionCol] = cellTmp
                     }
@@ -105,8 +102,8 @@ function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
                 positionCol = 0;
             }
         });
-        console.log(matrixFinal)
-        console.log(matrixToMatch)
+        setTable({cells: matrixFinal})
+        setTableToMatch({cells: matrixToMatch})
     },[data])
 
     function goBackToForm(){
@@ -116,7 +113,24 @@ function GenerateGrid({data, showForm}: {data: PropGame, showForm: () => void}){
     if(table){     
         return(
             <div>
-
+                <table>
+                    <tbody>
+                        {table.cells.map( row => {
+                            return (
+                                <tr>
+                                    {row.map( column => {
+                                        return (
+                                            <td>
+                                                <a>{column?.num}</a>
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+              
+                </table>
             </div>
         )
     }else{
@@ -131,14 +145,14 @@ interface PropGrid{
     grid: string 
 }
 
-interface PropGame{
+interface MessageFetch{
     grid: any
 }
 
 
 export default function Grid({showForm, grid} : PropGrid){
 
-    const [data, setData] = useState<PropGame>()
+    const [data, setData] = useState<MessageFetch>()
     const [isFetching, setFetching] = useState<Boolean>(true)
 
     useEffect(() => {
