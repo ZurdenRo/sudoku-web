@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import json from '../../resources/data.json'
+import Cell from '../cell/cell'
 
-interface Cell {
+export interface Cell {
     num : number,
     hidden: boolean,
     position: Position
@@ -118,10 +119,10 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                         {table.cells.map( row => {
                             return (
                                 <tr>
-                                    {row.map( column => {
+                                    {row.map( (column: Cell | undefined) => {
                                         return (
                                             <td>
-                                                <a>{column?.num}</a>
+                                                <Cell cell={column}></Cell>
                                             </td>
                                         )
                                     })}

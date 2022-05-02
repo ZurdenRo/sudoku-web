@@ -1,19 +1,18 @@
+import {Cell as Cells } from '../grid/Grid'
+
+export default function Cell({cell} : {cell: Cells | undefined}) {
 
 
-export default function Cell({updateMatrix, position, cell} : {updateMatrix: any, position : any, cell: any} ) {
-
-    var matrixCell
-
-    function checkCells(target, position){
+/*     function checkCells(target, position){
         console.log(target)
         const {x,y} = position
         updateMatrix(target, x, y)
-    }
+    } */
 
-    if(cell.hidden){
-        return <input type='number' onChange={(e) => checkCells(e.target.value, position)}></input>
+    if(cell?.hidden){
+        return <input type='number'></input>
     }else{
-        return <label>{cell.number}</label>
+        return <label>{cell?.num}</label>
     }
   
 }
