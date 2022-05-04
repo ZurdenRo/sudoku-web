@@ -1,6 +1,6 @@
 import {Cell as Cells } from '../grid/Grid'
 
-export default function Cell({cell} : {cell: Cells | undefined}) {
+export default function Cell({cell, checkValue} : {cell: Cells | undefined, checkValue: () => void}) {
 
 
 /*     function checkCells(target, position){

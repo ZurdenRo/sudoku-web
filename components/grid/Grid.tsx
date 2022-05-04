@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import json from '../../resources/data.json'
-import Cell from '../cell/cell'
+import Cell from '../cell/Cell'
 
 export interface Cell {
     num : number,
     hidden: boolean,
-    position: Position
+    position?: Position
 }
 
 interface Position {
@@ -66,9 +66,9 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                             return posHid.posX === pos.posX && posHid.posY === pos.posY;
                         });
                         if(posToHidden.length !== 0){
-                            var cellTmp : Cell = {num: numb, hidden: true, position: pos}
+                            var cellTmp : Cell = {num: numb, hidden: true}
                         }else{
-                            var cellTmp : Cell = {num: numb, hidden: false, position: pos}
+                            var cellTmp : Cell = {num: numb, hidden: false}
                         }
                         matrixFinal[row][column] = cellTmp
                     }
@@ -90,6 +90,8 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                 arrElem.map( (valuePosGrid: PositionGrid) => {
                 for (let column = 0; column < valuePosGrid.cellsMatrix.length; column++) {
                     let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
+                    let pos: Position = {posX: positionRow, posY: positionCol}
+                    cellTmp.position = pos
                     matrixFinal[positionRow][positionCol] = cellTmp
                     if(valuePosGrid.cellsMatrix[row][column].hidden){
                         matrixToMatch[positionRow][positionCol] =  undefined
@@ -107,8 +109,12 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
         setTableToMatch({cells: matrixToMatch})
     },[data])
 
-    function goBackToForm(){
+    const goBackToForm = () => {
         showForm()
+    }
+
+    const updateMatrix = () => {
+        console.log(tableToMatch)
     }
 
     if(table){     
@@ -122,7 +128,7 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                                     {row.map( (column: Cell | undefined) => {
                                         return (
                                             <td>
-                                                <Cell cell={column}></Cell>
+                                                <Cell cell={column} checkValue={updateMatrix}></Cell>
                                             </td>
                                         )
                                     })}
@@ -132,6 +138,8 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                     </tbody>
               
                 </table>
+                <button onClick={goBackToForm}>Back</button>
+                <button onClick={updateMatrix}>check</button>
             </div>
         )
     }else{
