@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import json from '../../resources/data.json'
-import Cell from '../cell/Cell'
+import Cell from '../cell'
 
 export interface Cell {
     num : number,

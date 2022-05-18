@@ -16,3 +16,4 @@ export default function Cell({cell, checkValue} : {cell: Cells | undefined, chec
     }
   
 }
+
