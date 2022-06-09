@@ -1,18 +1,21 @@
+import { ChangeEvent, useState } from 'react'
 import {Cell as Cells } from '../grid/Grid'
 
-export default function Cell({cell, checkValue} : {cell: Cells | undefined, checkValue: () => void}) {
+export default function Cell({cell, checkValue} : {cell: Cells, checkValue: (currentCell: Cells) => void}) {
 
 
-/*     function checkCells(target, position){
-        console.log(target)
-        const {x,y} = position
-        updateMatrix(target, x, y)
-    } */
+    const checkCell = (numberInput: string) => {
+        if(numberInput){
+            cell.num = Number(numberInput);
+        }else{
+            cell.num = undefined
+        }
+    }
 
-    if(cell?.hidden){
-        return <input type='number'></input>
+    if(cell.hidden){
+        return <input type='number' onChange={e => checkCell(e.target.value)}></input>
     }else{
-        return <label>{cell?.num}</label>
+        return <label>{cell.num}</label>
     }
   
 }

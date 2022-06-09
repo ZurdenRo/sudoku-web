@@ -3,7 +3,7 @@ import json from '../../resources/data.json'
 import Cell from '../cell'
 
 export interface Cell {
-    num : number,
+    num : number | undefined,
     hidden: boolean,
     position?: Position
 }
@@ -19,11 +19,11 @@ interface PositionGrid{
 }
 
 interface Table{
-    cells: Cell[][] | undefined[][]
+    cells: Cell[][]
 }
 
 
-function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => void}){
+function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => void}){
 
     const [table, setTable] = useState<Table>()
     const [tableToMatch, setTableToMatch] = useState<Table>()
@@ -79,10 +79,10 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
             finalArr.push(arrPosGrid)
         });
 
-        var positionRow = 0
-        var positionCol = 0
+        var positionRow : number = 0
+        var positionCol : number = 0
         var matrixFinal : Cell [][] = []
-        var matrixToMatch : Cell [][] | undefined[][] = []
+        var matrixToMatch : Cell [][] = []
         finalArr.map( arrElem => {
             for (let row = 0; row < numLength; row++) {
                 matrixFinal[positionRow] = []
@@ -94,27 +94,57 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                     cellTmp.position = pos
                     matrixFinal[positionRow][positionCol] = cellTmp
                     if(valuePosGrid.cellsMatrix[row][column].hidden){
-                        matrixToMatch[positionRow][positionCol] =  undefined
+                        cellTmp.num = undefined
+                        cellTmp.hidden = valuePosGrid.cellsMatrix[row][column].hidden
+                        matrixToMatch[positionRow][positionCol] =  cellTmp
                     }else{
                         matrixToMatch[positionRow][positionCol] = cellTmp
                     }
                     positionCol++;
-                }
-                });
+                }});
                 positionRow++;
                 positionCol = 0;
             }
         });
         setTable({cells: matrixFinal})
         setTableToMatch({cells: matrixToMatch})
-    },[data])
+    },[data]);
 
     const goBackToForm = () => {
         showForm()
     }
 
-    const updateMatrix = () => {
+    const updateMatrix = (cell : Cell) => {
+        console.log(cell)
+        
+    }
+
+    const checkMatrix = () => {
+        var a : boolean = checkEqualMatrix();
+        console.log(a)
         console.log(tableToMatch)
+    }
+
+    const checkEqualMatrix = () => {
+        if(table && tableToMatch){
+            for (let row = 0; row < table.cells.length; row++) {
+                for (let column = 0; column < table.cells.length; column++) {           
+                    
+                    if(!table.cells[row][column].num){
+                        console.log('!table.cells[row][column].num')
+                        return false;
+                    }
+                    if(table.cells[row][column].num !== tableToMatch.cells[row][column].num){
+                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num')
+                        return false;
+                    }
+
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
     }
 
     if(table){     
@@ -125,7 +155,7 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
                         {table.cells.map( row => {
                             return (
                                 <tr>
-                                    {row.map( (column: Cell | undefined) => {
+                                    {row.map( (column: Cell) => {
                                         return (
                                             <td>
                                                 <Cell cell={column} checkValue={updateMatrix}></Cell>
@@ -139,7 +169,7 @@ function GenerateGrid({data, showForm}: {data: MessageFetch, showForm: () => voi
               
                 </table>
                 <button onClick={goBackToForm}>Back</button>
-                <button onClick={updateMatrix}>check</button>
+                <button onClick={checkMatrix}>check</button>
             </div>
         )
     }else{
