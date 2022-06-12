@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 import {Cell as Cells } from '../grid/Grid'
 
-export default function Cell({cell, checkValue} : {cell: Cells, checkValue: (currentCell: Cells) => void}) {
+export default function Cell({cell}: {cell: Cells}) {
 
 
     const checkCell = (numberInput: string) => {

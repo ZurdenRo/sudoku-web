@@ -114,11 +114,6 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
         showForm()
     }
 
-    const updateMatrix = (cell : Cell) => {
-        console.log(cell)
-        
-    }
-
     const checkMatrix = () => {
         var a : boolean = checkEqualMatrix();
         console.log(a)
@@ -128,7 +123,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
     const checkEqualMatrix = () => {
         if(table && tableToMatch){
             for (let row = 0; row < table.cells.length; row++) {
-                for (let column = 0; column < table.cells.length; column++) {           
+                for (let column = 0; column < table.cells.length; column++) {        
                     
                     if(!table.cells[row][column].num){
                         console.log('!table.cells[row][column].num')
@@ -158,7 +153,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                                     {row.map( (column: Cell) => {
                                         return (
                                             <td>
-                                                <Cell cell={column} checkValue={updateMatrix}></Cell>
+                                                <Cell cell={column}></Cell>
                                             </td>
                                         )
                                     })}
