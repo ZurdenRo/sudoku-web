@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import json from '../../resources/data.json'
+import cell from '../cell'
 import Cell from '../cell'
 
 export interface Cell {
     num : number | undefined,
     hidden: boolean,
     position?: Position
+    isOk?: boolean | undefined
 }
 
 interface Position {
@@ -66,7 +68,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                             return posHid.posX === pos.posX && posHid.posY === pos.posY;
                         });
                         if(posToHidden.length !== 0){
-                            var cellTmp : Cell = {num: numb, hidden: true}
+                            var cellTmp : Cell = {num: numb, hidden: true, isOk: undefined}
                         }else{
                             var cellTmp : Cell = {num: numb, hidden: false}
                         }
@@ -88,24 +90,33 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                 matrixFinal[positionRow] = []
                 matrixToMatch[positionRow] = []
                 arrElem.map( (valuePosGrid: PositionGrid) => {
-                for (let column = 0; column < valuePosGrid.cellsMatrix.length; column++) {
-                    let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
-                    let pos: Position = {posX: positionRow, posY: positionCol}
-                    cellTmp.position = pos
-                    matrixFinal[positionRow][positionCol] = cellTmp
-                    if(valuePosGrid.cellsMatrix[row][column].hidden){
-                        cellTmp.num = undefined
-                        cellTmp.hidden = valuePosGrid.cellsMatrix[row][column].hidden
-                        matrixToMatch[positionRow][positionCol] =  cellTmp
-                    }else{
-                        matrixToMatch[positionRow][positionCol] = cellTmp
-                    }
-                    positionCol++;
-                }});
+                    for (let column = 0; column < valuePosGrid.cellsMatrix.length; column++) {
+                        let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column] 
+                        
+                        if(cellTmp.num){
+                            let cellNumber : number = cellTmp.num
+                            let pos: Position = {posX: positionRow, posY: positionCol}
+                            let cell : Cell = {num: cellNumber, hidden: cellTmp.hidden, position: pos}
+                            matrixFinal[positionRow][positionCol] = cell
+                        }
+                        
+                        if(valuePosGrid.cellsMatrix[row][column].hidden){
+                            let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
+                            cellTmp.num = undefined
+                            cellTmp.hidden = valuePosGrid.cellsMatrix[row][column].hidden
+                            matrixToMatch[positionRow][positionCol] =  cellTmp
+                        }else{
+                            matrixToMatch[positionRow][positionCol] = cellTmp
+                        }
+                        positionCol++;
+                    }});
+                
                 positionRow++;
                 positionCol = 0;
             }
+            
         });
+        
         setTable({cells: matrixFinal})
         setTableToMatch({cells: matrixToMatch})
     },[data]);
@@ -118,6 +129,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
         var a : boolean = checkEqualMatrix();
         console.log(a)
         console.log(tableToMatch)
+        console.log(table)
     }
 
     const checkEqualMatrix = () => {
@@ -125,12 +137,14 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
             for (let row = 0; row < table.cells.length; row++) {
                 for (let column = 0; column < table.cells.length; column++) {        
                     
-                    if(!table.cells[row][column].num){
-                        console.log('!table.cells[row][column].num')
-                        return false;
-                    }
+                 
                     if(table.cells[row][column].num !== tableToMatch.cells[row][column].num){
                         console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num')
+                        tableToMatch.cells[row][column].isOk = false;
+                        return false;
+                    }
+                    if(!tableToMatch.cells[row][column].num){
+                        console.log('!table.cells[row][column].num')
                         return false;
                     }
 
