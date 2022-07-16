@@ -7,7 +7,7 @@ export interface Cell {
     num : number | undefined,
     hidden: boolean,
     position?: Position
-    isOk?: boolean | undefined
+    isOk: boolean
 }
 
 interface Position {
@@ -68,9 +68,9 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                             return posHid.posX === pos.posX && posHid.posY === pos.posY;
                         });
                         if(posToHidden.length !== 0){
-                            var cellTmp : Cell = {num: numb, hidden: true, isOk: undefined}
+                            var cellTmp : Cell = {num: numb, hidden: true, isOk: false}
                         }else{
-                            var cellTmp : Cell = {num: numb, hidden: false}
+                            var cellTmp : Cell = {num: numb, hidden: false, isOk: false}
                         }
                         matrixFinal[row][column] = cellTmp
                     }
@@ -94,9 +94,9 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                         let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column] 
                         
                         if(cellTmp.num){
-                            let cellNumber : number = cellTmp.num
+                            
                             let pos: Position = {posX: positionRow, posY: positionCol}
-                            let cell : Cell = {num: cellNumber, hidden: cellTmp.hidden, position: pos}
+                            let cell : Cell = {num: cellTmp.num, hidden: cellTmp.hidden, position: pos, isOk: cellTmp.isOk}
                             matrixFinal[positionRow][positionCol] = cell
                         }
                         
@@ -125,49 +125,62 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
         showForm()
     }
 
+    const updateMatrix = (cell: Cell) => {
+        console.log('call f: update', cell)
+        if(tableToMatch){
+           //here i need update hook table
+           if(cell.position){
+            var copyTable: Cell [][] = Array.from(tableToMatch.cells);
+            copyTable[cell.position.posX][cell.position.posY].num = cell.num;
+            setTableToMatch({cells: copyTable})
+           }
+            
+        }
+    }
+
     const checkMatrix = () => {
-        var a : boolean = checkEqualMatrix();
-        console.log(a)
+        
+
+        if(table && tableToMatch){
+            var copyTable: Cell [][] = Array.from(tableToMatch.cells)
+            
+            for (let row = 0; row < table.cells.length; row++) {
+                for (let column = 0; column < table.cells.length; column++) {        
+                    
+                    if(table.cells[row][column].num !== copyTable[row][column].num){
+                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num')
+                        copyTable[row][column].isOk = false;
+                    }else{
+                        copyTable[row][column].isOk = true;
+                    }
+                    
+                }
+            }
+
+            setTableToMatch({cells: copyTable});
+        }
+
         console.log(tableToMatch)
         console.log(table)
     }
 
     const checkEqualMatrix = () => {
-        if(table && tableToMatch){
-            for (let row = 0; row < table.cells.length; row++) {
-                for (let column = 0; column < table.cells.length; column++) {        
-                    
-                 
-                    if(table.cells[row][column].num !== tableToMatch.cells[row][column].num){
-                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num')
-                        tableToMatch.cells[row][column].isOk = false;
-                        return false;
-                    }
-                    if(!tableToMatch.cells[row][column].num){
-                        console.log('!table.cells[row][column].num')
-                        return false;
-                    }
-
-                }
-            }
-            return true;
-        }else{
-            return false;
-        }
+       
+      
     }
 
-    if(table){     
+    if(tableToMatch){     
         return(
             <div>
                 <table>
                     <tbody>
-                        {table.cells.map( row => {
+                        {tableToMatch.cells.map( row => {
                             return (
                                 <tr>
                                     {row.map( (column: Cell) => {
                                         return (
-                                            <td>
-                                                <Cell cell={column}></Cell>
+                                            <td key={column.position?.posX}>
+                                                <Cell cell={column} updateMatrix={updateMatrix}></Cell>
                                             </td>
                                         )
                                     })}
