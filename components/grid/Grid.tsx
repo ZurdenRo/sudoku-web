@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react'
 import json from '../../resources/data.json'
-import cell from '../cell'
 import Cell from '../cell'
 
 export interface Cell {
-    num : number | undefined,
+    num: number | null,
     hidden: boolean,
+    isOk: boolean,
     position?: Position
-    isOk: boolean
 }
 
 interface Position {
@@ -29,7 +28,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
 
     const [table, setTable] = useState<Table>()
     const [tableToMatch, setTableToMatch] = useState<Table>()
-    const [isEqual, setEqual] = useState<Boolean>(false)
+    const [isFinishGame, setFinishGame] = useState<Boolean>(false)
     
     const getRandomArbitrary = (num: number): Position[] => {
         let randomTmp : Position [] = [];
@@ -67,11 +66,13 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                         let posToHidden : Position[] = arrPosToHidden.filter( posHid => {
                             return posHid.posX === pos.posX && posHid.posY === pos.posY;
                         });
+
                         if(posToHidden.length !== 0){
                             var cellTmp : Cell = {num: numb, hidden: true, isOk: false}
                         }else{
                             var cellTmp : Cell = {num: numb, hidden: false, isOk: false}
                         }
+                        
                         matrixFinal[row][column] = cellTmp
                     }
                 }
@@ -91,23 +92,25 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                 matrixToMatch[positionRow] = []
                 arrElem.map( (valuePosGrid: PositionGrid) => {
                     for (let column = 0; column < valuePosGrid.cellsMatrix.length; column++) {
-                        let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column] 
-                        
-                        if(cellTmp.num){
-                            
+                        if(valuePosGrid.cellsMatrix[row][column].num){
+                            let num = valuePosGrid.cellsMatrix[row][column].num
+                            let hidden: boolean = valuePosGrid.cellsMatrix[row][column].hidden
+                            let isOk: boolean = valuePosGrid.cellsMatrix[row][column].isOk
                             let pos: Position = {posX: positionRow, posY: positionCol}
-                            let cell : Cell = {num: cellTmp.num, hidden: cellTmp.hidden, position: pos, isOk: cellTmp.isOk}
+                            let cell: Cell = {num: num, hidden: hidden, isOk: isOk, position: pos}
                             matrixFinal[positionRow][positionCol] = cell
+                            if(hidden){
+                                let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
+                                cellTmp.num = null
+                                cellTmp.position = pos;
+                                matrixToMatch[positionRow][positionCol] =  cellTmp
+                            }else{
+                                let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
+                                cellTmp.position = pos;
+                                matrixToMatch[positionRow][positionCol] = cellTmp
+                            }
                         }
-                        
-                        if(valuePosGrid.cellsMatrix[row][column].hidden){
-                            let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
-                            cellTmp.num = undefined
-                            cellTmp.hidden = valuePosGrid.cellsMatrix[row][column].hidden
-                            matrixToMatch[positionRow][positionCol] =  cellTmp
-                        }else{
-                            matrixToMatch[positionRow][positionCol] = cellTmp
-                        }
+                       
                         positionCol++;
                     }});
                 
@@ -139,7 +142,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
     }
 
     const checkMatrix = () => {
-        
+        var isEqual : boolean = true
 
         if(table && tableToMatch){
             var copyTable: Cell [][] = Array.from(tableToMatch.cells)
@@ -148,18 +151,21 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                 for (let column = 0; column < table.cells.length; column++) {        
                     
                     if(table.cells[row][column].num !== copyTable[row][column].num){
-                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num')
+                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num');
                         copyTable[row][column].isOk = false;
+                        isEqual = false;
                     }else{
                         copyTable[row][column].isOk = true;
                     }
                     
                 }
             }
-
             setTableToMatch({cells: copyTable});
+            if(!isEqual){
+                setFinishGame(isEqual)
+            }
         }
-
+        console.log(isFinishGame)
         console.log(tableToMatch)
         console.log(table)
     }
@@ -179,7 +185,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                                 <tr>
                                     {row.map( (column: Cell) => {
                                         return (
-                                            <td key={column.position?.posX}>
+                                            <td>
                                                 <Cell cell={column} updateMatrix={updateMatrix}></Cell>
                                             </td>
                                         )
@@ -222,7 +228,7 @@ export default function Grid({showForm, grid} : PropGrid){
     },[grid])
 
     function getData(query: string){
-        //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
+        //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query).then( responseOk => {response.json()}).then(data => {})
         //const data = await response.json()
         setData({grid : json})
         setFetching(false)

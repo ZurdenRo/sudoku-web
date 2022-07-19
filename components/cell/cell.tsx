@@ -13,9 +13,8 @@ export default function Cell({cell, updateMatrix}: {cell: Cells, updateMatrix: (
             console.log(cell);
             updateMatrix(cell);
         }else{
-            cell.num = undefined
+            cell.num = null
             updateMatrix(cell);
-            
         }
     }
 
