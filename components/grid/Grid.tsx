@@ -5,7 +5,7 @@ import Cell from '../cell'
 export interface Cell {
     num: number | null,
     hidden: boolean,
-    isOk: boolean,
+    isOk?: boolean | null,
     position?: Position
 }
 
@@ -68,9 +68,9 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                         });
 
                         if(posToHidden.length !== 0){
-                            var cellTmp : Cell = {num: numb, hidden: true, isOk: false}
+                            var cellTmp : Cell = {num: numb, hidden: true}
                         }else{
-                            var cellTmp : Cell = {num: numb, hidden: false, isOk: false}
+                            var cellTmp : Cell = {num: numb, hidden: false}
                         }
                         
                         matrixFinal[row][column] = cellTmp
@@ -94,23 +94,21 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                     for (let column = 0; column < valuePosGrid.cellsMatrix.length; column++) {
                         if(valuePosGrid.cellsMatrix[row][column].num){
                             let num = valuePosGrid.cellsMatrix[row][column].num
-                            let hidden: boolean = valuePosGrid.cellsMatrix[row][column].hidden
-                            let isOk: boolean = valuePosGrid.cellsMatrix[row][column].isOk
+                            let hidden: boolean = valuePosGrid.cellsMatrix[row][column].hidden               
                             let pos: Position = {posX: positionRow, posY: positionCol}
-                            let cell: Cell = {num: num, hidden: hidden, isOk: isOk, position: pos}
+                            let cell: Cell = {num: num, hidden: hidden, position: pos}
                             matrixFinal[positionRow][positionCol] = cell
-                            if(hidden){
-                                let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
+                            let cellTmp: Cell = valuePosGrid.cellsMatrix[row][column]
+                            if(cellTmp.hidden){
                                 cellTmp.num = null
                                 cellTmp.position = pos;
+                                cellTmp.isOk = null
                                 matrixToMatch[positionRow][positionCol] =  cellTmp
                             }else{
-                                let cellTmp : Cell = valuePosGrid.cellsMatrix[row][column]
                                 cellTmp.position = pos;
                                 matrixToMatch[positionRow][positionCol] = cellTmp
                             }
                         }
-                       
                         positionCol++;
                     }});
                 
@@ -131,7 +129,6 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
     const updateMatrix = (cell: Cell) => {
         console.log('call f: update', cell)
         if(tableToMatch){
-           //here i need update hook table
            if(cell.position){
             var copyTable: Cell [][] = Array.from(tableToMatch.cells);
             copyTable[cell.position.posX][cell.position.posY].num = cell.num;
