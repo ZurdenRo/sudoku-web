@@ -28,7 +28,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
 
     const [table, setTable] = useState<Table>()
     const [tableToMatch, setTableToMatch] = useState<Table>()
-    const [isFinishGame, setFinishGame] = useState<Boolean>(false)
+    const [isFinishGame, setFinishGame] = useState<boolean>(false)
     
     const getRandomArbitrary = (num: number): Position[] => {
         let randomTmp : Position [] = [];
@@ -158,8 +158,9 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                 }
             }
             setTableToMatch({cells: copyTable});
-            if(!isEqual){
-                setFinishGame(isEqual)
+
+            if(isEqual){
+                setFinishGame(a => !a)
             }
         }
         console.log(isFinishGame)
@@ -183,7 +184,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                                     {row.map( (column: Cell) => {
                                         return (
                                             <td>
-                                                <Cell cell={column} updateMatrix={updateMatrix}></Cell>
+                                                <Cell blockInput={isFinishGame} cell={column} updateMatrix={updateMatrix}></Cell>
                                             </td>
                                         )
                                     })}

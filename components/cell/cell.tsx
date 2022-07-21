@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import { type } from 'os'
 // i need install package classNames() to manage 3 options: undefined, true or false
 
-export default function Cell({cell, updateMatrix}: {cell: Cells, updateMatrix: (cell: Cells) => void}) {
+export default function Cell({blockInput, cell, updateMatrix}: {blockInput: boolean, cell: Cells, updateMatrix: (cell: Cells) => void}) {
 
     const checkCell = (numberInput: string) => {
        
@@ -20,11 +20,11 @@ export default function Cell({cell, updateMatrix}: {cell: Cells, updateMatrix: (
     }
 
     if(cell.hidden){
-        console.log(cell.isOk == null)
+        console.log(blockInput)
         var inputStyle = classNames({ [`${styles.input}`]: cell.isOk == null,
                                       [`${styles.input}`]: cell.isOk, 
                                       [`${styles.inputError}`] : cell.isOk == false});
-        return <input className={inputStyle} onChange={e => checkCell(e.target.value)}></input>
+        return <input disabled={blockInput} className={inputStyle} onChange={e => checkCell(e.target.value)}></input>
     }else{
         return <label>{cell.num}</label>
     }
