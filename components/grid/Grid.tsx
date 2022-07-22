@@ -51,19 +51,20 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
 
     useEffect( () => {
         var finalArr = new Array()
+        console.log(data)
         var numLength : number = data.grid.subGrid.length
 
         data.grid.subGrid.forEach((element: any, i: number) => {
             let arrPosGrid : PositionGrid[] = []
             element.forEach((matrix: any) => {
-                let arrPosToHidden : Position [] = getRandomArbitrary(numLength)
+                let arrPosToHidden = getRandomArbitrary(numLength)
                 let matrixFinal : Cell [][] = []
                 for (let row = 0; row < matrix.cellsMatrix.length; row++) {
                     matrixFinal[row] = []
                     for (let column = 0; column < matrix.cellsMatrix.length; column++) {
                         let numb: number = matrix.cellsMatrix[row][column].number;
                         let pos: Position = {posX:matrix.cellsMatrix[row][column].row, posY: matrix.cellsMatrix[row][column].column};
-                        let posToHidden : Position[] = arrPosToHidden.filter( posHid => {
+                        let posToHidden = arrPosToHidden.filter( posHid => {
                             return posHid.posX === pos.posX && posHid.posY === pos.posY;
                         });
 
@@ -134,11 +135,10 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
             copyTable[cell.position.posX][cell.position.posY].num = cell.num;
             setTableToMatch({cells: copyTable})
            }
-            
         }
     }
 
-    const checkMatrix = () => {
+    const checkMatrixIfIsEqual = () => {
         var isEqual : boolean = true
 
         if(table && tableToMatch){
@@ -160,18 +160,11 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
             setTableToMatch({cells: copyTable});
 
             if(isEqual){
-                setFinishGame(a => !a)
+                setFinishGame(isFinish => !isFinish)
             }
         }
-        console.log(isFinishGame)
-        console.log(tableToMatch)
-        console.log(table)
     }
 
-    const checkEqualMatrix = () => {
-       
-      
-    }
 
     if(tableToMatch){     
         return(
@@ -195,7 +188,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
               
                 </table>
                 <button onClick={goBackToForm}>Back</button>
-                <button onClick={checkMatrix}>check</button>
+                <button disabled={isFinishGame} onClick={checkMatrixIfIsEqual}>check</button>
             </div>
         )
     }else{
@@ -226,10 +219,12 @@ export default function Grid({showForm, grid} : PropGrid){
     },[grid])
 
     function getData(query: string){
-        //const response = await fetch ('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query).then( responseOk => {response.json()}).then(data => {})
-        //const data = await response.json()
-        setData({grid : json})
-        setFetching(false)
+        fetch('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query).then(responseOk => {return responseOk.json()})
+        .then(data => { 
+            //console.log(data)
+            setData({grid : data})
+            setFetching(false)
+        })
     }
 
     if(isFetching) return <h1>loading</h1>;
