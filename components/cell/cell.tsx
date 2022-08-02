@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from 'react'
 import {Cell as Cells} from '../grid/Grid'
 import styles from './Cell.module.css'
 import classNames from 'classnames'

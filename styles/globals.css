@@ -1,7 +1,7 @@
 main{
-   display: grid;
    margin: 0;
    padding: 0;
+   background-color: red;
 }
 
 body {
@@ -12,25 +12,4 @@ body {
 html{
    margin: 0;
    padding: 0;
-}
-
-.formGrid{
-   border: 5px solid #FFFF00;
-   background-color: rgb(255, 255, 255);
-   justify-self: center;
-   justify-content: center;
-   text-align: center;
-   margin: 20%;
-}
-
-.container-table{
-   margin: 20%;
-   justify-self: center;
-   justify-content: center;
-   text-align: center;
-}
-
-.input{
-   border: 10px;
-   background-color: rebeccapurple;
 }
