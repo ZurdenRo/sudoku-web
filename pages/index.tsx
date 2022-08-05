@@ -30,11 +30,13 @@ export default function Home(){
         <>  
             <Head>
                 <title>My page</title>
-                <meta name='keyboards' content='mypage'/>
+                <meta name='UI Sudoku' content='Sudoku Game'/>
             </Head>
-            <main className='mainApp'>
+            
+            <main className=''>
                 {hiddenForm ? <Form newGrid={[showGrid, getDataWithForm]}/> : <Grid showForm={showForm} grid={gridHome.idGrid} />}
             </main>
+
         </>
     );
 }
