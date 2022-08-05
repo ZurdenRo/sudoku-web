@@ -51,7 +51,7 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
 
     useEffect( () => {
         var finalArr = new Array()
-        console.log(data)
+        //console.log(data)
         var numLength : number = data.grid.subGrid.length
 
         data.grid.subGrid.forEach((element: any, i: number) => {
@@ -78,9 +78,9 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                     }
                 }
                 let posGrid : PositionGrid = {cellsMatrix: matrixFinal, indicator: i}
-                arrPosGrid.push(posGrid)
+                arrPosGrid.push(posGrid);
             });
-            finalArr.push(arrPosGrid)
+            finalArr.push(arrPosGrid);
         });
 
         var positionRow : number = 0
@@ -124,31 +124,31 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
     },[data]);
 
     const goBackToForm = () => {
-        showForm()
+        showForm();
     }
 
     const updateMatrix = (cell: Cell) => {
         console.log('call f: update', cell)
-        if(tableToMatch){
-           if(cell.position){
+       
+        if(cell.position && tableToMatch){
             var copyTable: Cell [][] = Array.from(tableToMatch.cells);
             copyTable[cell.position.posX][cell.position.posY].num = cell.num;
-            setTableToMatch({cells: copyTable})
-           }
+            setTableToMatch({cells: copyTable});
         }
+        
     }
 
     const checkMatrixIfIsEqual = () => {
         var isEqual : boolean = true
 
         if(table && tableToMatch){
-            var copyTable: Cell [][] = Array.from(tableToMatch.cells)
+            var copyTable: Cell [][] = Array.from(tableToMatch.cells);
             
             for (let row = 0; row < table.cells.length; row++) {
-                for (let column = 0; column < table.cells.length; column++) {        
+                for (let column = 0; column < table.cells.length; column++) {     
                     
                     if(table.cells[row][column].num !== copyTable[row][column].num){
-                        console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num');
+                        //console.log('table.cells[row][column].num !== tableToMatch.cells[row][column].num');
                         copyTable[row][column].isOk = false;
                         isEqual = false;
                     }else{
@@ -158,9 +158,11 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
                 }
             }
             setTableToMatch({cells: copyTable});
-
+            console.log(tableToMatch)
+            console.log(table)
             if(isEqual){
-                setFinishGame(isFinish => !isFinish)
+                setFinishGame(isFinish => !isFinish);
+                alert("Finish Game!");
             }
         }
     }
@@ -168,27 +170,30 @@ function GenerateGrid({data, showForm} : {data: MessageFetch, showForm: () => vo
 
     if(tableToMatch){     
         return(
-            <div>
-                <table>
-                    <tbody>
-                        {tableToMatch.cells.map( row => {
-                            return (
-                                <tr>
-                                    {row.map( (column: Cell) => {
-                                        return (
-                                            <td>
-                                                <Cell blockInput={isFinishGame} cell={column} updateMatrix={updateMatrix}></Cell>
-                                            </td>
-                                        )
-                                    })}
-                                </tr>
-                            )
-                        })}
-                    </tbody>
-              
-                </table>
-                <button onClick={goBackToForm}>Back</button>
-                <button disabled={isFinishGame} onClick={checkMatrixIfIsEqual}>check</button>
+            <div className="flex-column item-center">
+                <div className="">  
+                    <table className="">    
+                        <tbody>
+                            {tableToMatch.cells.map( row => {
+                                return (
+                                    <tr>
+                                        {row.map( (column: Cell) => {
+                                            return (
+                                                <td className="text-center w-50 h-50">
+                                                    <Cell blockInput={isFinishGame} cell={column} updateMatrix={updateMatrix}></Cell>
+                                                </td>
+                                            )
+                                        })}
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                </div>   
+                <div className="p-10" >
+                    <button onClick={goBackToForm}>Back</button>
+                    <button disabled={isFinishGame} onClick={checkMatrixIfIsEqual}>check</button>
+                </div>   
             </div>
         )
     }else{
@@ -227,7 +232,12 @@ export default function Grid({showForm, grid} : PropGrid){
         })
     }
 
-    if(isFetching) return <h1>loading</h1>;
+    if(isFetching) 
+        return (
+            <div className="flex justify-center item-center">
+                 <h1 className="text-blue" >loading</h1>
+            </div>    
+        )
 
     return(
         <>

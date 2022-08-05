@@ -8,7 +8,7 @@ export default function Cell({blockInput, cell, updateMatrix}: {blockInput: bool
        
         if(numberInput){
             cell.num = Number(numberInput);
-            console.log(cell);
+            //console.log(cell);
             updateMatrix(cell);
         }else{
             cell.num = null
@@ -17,12 +17,14 @@ export default function Cell({blockInput, cell, updateMatrix}: {blockInput: bool
     }
 
     if(cell.hidden){
-        console.log(blockInput)
-        var inputStyle = classNames({ [`${styles.input}`]: cell.isOk == null,
-                                      [`${styles.input}`]: cell.isOk, 
-                                      [`${styles.inputError}`] : cell.isOk == false});
-        return <input disabled={blockInput} className={inputStyle} onChange={e => checkCell(e.target.value)}></input>
-    }else{
+        var inputStyle;
+        if(typeof cell.isOk == "object") {
+            inputStyle = classNames({[`${styles.input}`]: true})
+        }else{
+            inputStyle = classNames({[`${styles.input}`]: cell.isOk, [`${styles.inputError}`]: !cell.isOk})
+        }
+        return <input disabled={blockInput} className={`${inputStyle}`} onChange={e => checkCell(e.target.value)}></input>
+    }else{       
         return <label>{cell.num}</label>
     }
 

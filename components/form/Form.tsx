@@ -44,13 +44,13 @@ export default function Form (functionParent : PropFrom){
   }
 
   return (
-    <div className='form'>
-        <input ref={refGridTwo} onChange={fGridTwo} type='radio' name='grid' value='two'></input>
-        <label>Grid 2x2</label>
-        <input ref={refGridThree} onChange={fgridThree} type='radio' name='grid' value='three'></input>
-        <label>Grid 3x3</label>
-        <button onClick={initGame}>Start</button>
+    <div className="flex justify-center item-center">
+        <input className="m-18" ref={refGridTwo} onChange={fGridTwo} type="radio" name="grid" value="two"></input>
+        <label className="px-18">Grid 2x2</label>
+        <input className="m-18" ref={refGridThree} onChange={fgridThree} type="radio" name="grid" value="three"></input>
+        <label className="px-18">Grid 3x3</label>
+        <button className="px-18" onClick={initGame}>Start</button>
     </div>
   );
- 
+  
 }
