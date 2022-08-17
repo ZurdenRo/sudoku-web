@@ -3,7 +3,7 @@
  */
 
 const nextConfig = {
-    MONGO_URI: ''
+    
 };
 
 
