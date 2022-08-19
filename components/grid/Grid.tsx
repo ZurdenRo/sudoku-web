@@ -224,12 +224,13 @@ export default function Grid({showForm, grid} : PropGrid){
     },[grid])
 
     function getData(query: string){
-        fetch('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query).then(responseOk => {return responseOk.json()})
-        .then(data => { 
-            //console.log(data)
-            setData({grid : data})
-            setFetching(false)
-        })
+        fetch('https://zurdenro-my-app-74i6k.ondigitalocean.app/api/v1/grid/'+ query)
+            .then(responseOk => {return responseOk.json()})
+            .then(data => { 
+                //console.log(data)
+                setData({grid : data})
+                setFetching(false)
+            })
     }
 
     if(isFetching) 
